@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  starting_price: 9.99
+  user: one
+  start_time: 2024-06-19 14:06:40
+  end_time: 2024-06-19 14:06:40
+  minimum_selling_price: 9.99
+
+two:
+  title: MyString
+  description: MyText
+  starting_price: 9.99
+  user: two
+  start_time: 2024-06-19 14:06:40
+  end_time: 2024-06-19 14:06:40
+  minimum_selling_price: 9.99
