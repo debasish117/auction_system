@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_items, only: [:show, :edit, :update, :destroy]
 
 
   def index
@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @bids = @items.bids.order(amount: :desc)
+    @bids = @item.bids.order(amount: :desc)
   end
 
   def new
@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
   
   def create
     @item = current_user.items.build(item_params)
-    if @item.save
+    if @item.save!
       redirect_to @item, notice: 'Item was successfully created.'
     else
       render :new
@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   private
 
   def set_items
-    @item = item.find(params[:id])
+    @item = Item.find(params[:id])
   end
 
   def item_params

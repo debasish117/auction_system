@@ -1,0 +1,32 @@
+<h1>Items for Auction</h1>
+
+<% if user_signed_in? %>
+  <%= link_to 'New Item', new_item_path, class: "btn btn-primary" %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Starting Price</th>
+      <th>Minimum Selling Price</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.title %></td>
+        <td><%= truncate(item.description, length: 50) %></td>
+        <td><%= number_to_currency(item.starting_price) %></td>
+        <td><%= number_to_currency(item.minimum_selling_price) %></td>
+        <td><%= item.start_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= item.end_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= link_to 'View Item', item_path(item), class: "btn btn-secondary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

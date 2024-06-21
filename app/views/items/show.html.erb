@@ -1,0 +1,67 @@
+<p>
+  <strong>Title:</strong>
+  <%= @item.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @item.description %>
+</p>
+
+<p>
+  <strong>Starting Price:</strong>
+  <%= @item.starting_price %>
+</p>
+
+<p>
+  <strong>Minimum Selling Price:</strong>
+  <%= @item.minimum_selling_price %>
+</p>
+
+<p>
+  <strong>Current Highest Bid:</strong>
+  <%= @item.bids.maximum(:amount) %>
+</p>
+
+<p>
+  <strong>Auction End Time:</strong>
+  <%= @item.end_time %>
+</p>
+
+<% if @item.winner_id.present? %>
+<p><strong>Winner:</strong> <%= User.find(@item.winner_id).email %></p>
+<% end %>
+
+<h2>Bids</h2>
+<% if current_user.buyer? %>
+  <% if user_signed_in? %>
+    <%= form_with(model: [ @item, @item.bids.build ], local: true) do |form| %>
+      <div class="field">
+        <%= form.label :amount %>
+        <%= form.number_field :amount %>
+      </div>
+
+      <div class="field">
+        <%= form.label :maximum_bid %>
+        <%= form.number_field :maximum_bid %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit 'Place Bid' %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>You must <%= link_to 'sign in', new_user_session_path %> to place a bid.</p>
+  <% end %>
+<% end %> 
+
+<% if current_user.seller? %>
+<h3>Current Bids</h3>
+<div id="bids" data-item-id="<%= @item.id %>">
+  <ul id="bids-list">
+    <% @bids.each do |bid| %>
+      <%= render bid %>
+    <% end %>
+  </ul>
+</div>
+<%end%>

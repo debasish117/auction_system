@@ -5,9 +5,9 @@ class BidsController < ApplicationController
     @item = Item.find(params[:item_id])
     @bid = @item.bids.build(bid_params)
     @bid.user = current_user
+    BidService.new(@item,@bid).place_bid
 
-    if @bid.save
-      BidService.new(@item,@bid).place_bid
+    if @bid.save!
       redirect_to @item, notice: 'Your bid was placed successfully.'
     else
       redirect_to @item, alert: 'Failed to place bid.'
